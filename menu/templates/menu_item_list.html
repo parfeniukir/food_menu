@@ -6,8 +6,16 @@
     <title>Menu</title>
 </head>
 <body>
-    <h1>Restaurant Menu</h1>
-    <h2>{{ meal }}</h2>
-    <h2>{{ drink }}</h2>
+    <h1>Меню</h1>
+    {% for category in meals %}
+    <h2>{{ category.1 }}</h2>
+        {% for item in menuitem_list %}
+            {% if item.meal_category == category.0 %}
+                <h4>{{ item.meal_name }}</h4>
+                <h4>{{ item.meal_description }}</h4>
+                <h4>{{ item.price }}</h4>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
 </body>
 </html>
