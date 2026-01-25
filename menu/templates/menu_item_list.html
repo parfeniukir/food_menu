@@ -1,21 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=\, initial-scale=1.0">
-    <title>Menu</title> <!-- Заголовок сторінки у вкладці браузера -->
-</head>
-<body>
-    <h1>Меню</h1> <!-- Основний заголовок сторінки -->
-    {% for category in meals %} <!-- Цикл по всіх категоріях страв -->
-    <h2>{{ category.1 }}</h2> <!-- Виведення назви категорії (другий елемент кортежу) -->
-        {% for item in menuitem_list %} <!-- Цикл по всіх пунктах меню (за таблиці бази даних) -->
-            {% if item.meal_category == category.0 %} <!-- Перевірка, чи пункт меню належить до поточної категорії -->
-                <h4>{{ item.meal_name }}</h4> <!-- Виведення назви страви -->
-                <h4>{{ item.meal_description }}</h4> <!-- Виведення опису страви -->
-                <h4>{{ item.price }}</h4> <!-- Виведення ціни страви -->
-            {% endif %} <!-- Кінець перевірки категорії -->
-        {% endfor %} <!-- Кінець циклу по пунктах меню -->
-    {% endfor %} <!-- Кінець циклу по категоріях -->
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+  <h1>Меню</h1>
+    <ul class="list-group list-group-flush">
+        {% for category in meals %}
+            <h2 class="pt-5">{{ category.1 }}</h2>
+                {% for item in menuitem_list %}
+                    {% if item.meal_category == category.0 %}
+                        {% if item.status == 0 %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center border-0 pb-0">
+                            <a href="{% url 'menu_item' item.pk %}"><h3><del>{{ item.meal_name }}</del></h3></a>
+                            <span class="badge bg-primary rounded-pill">{{ item.price }}</span>
+                        </li>
+                        <li class="list-group-item pt-0">
+                            <p>{{ item.meal_description }}</p>
+                        </li>
+                        {% else %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center border-0 pb-0">
+                            <a href="{% url 'menu_item' item.pk %}"><h3>{{ item.meal_name }}</h3></a>
+                            <span class="badge bg-primary rounded-pill">{{ item.price }}</span>
+                        </li>
+                        <li class="list-group-item pt-0">
+                            <p>{{ item.meal_description }}</p>
+                        </li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

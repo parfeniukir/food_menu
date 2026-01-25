@@ -28,7 +28,7 @@ class MenuItem(models.Model):
     meal_description = models.TextField(null=True)
     price = models.DecimalField(decimal_places=2, max_digits=10)
     meal_category = models.CharField(max_length=30, choices=MEAL_CATEGORY)
-    # meal_category = models.ForeignKey(Categoty, on_delete=models.CASCADE)
+    # meal_category_id = models.ForeignKey(Categoty, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.BooleanField(default=True, choices=STATUS_CHOISES)
     date_created = models.DateTimeField(auto_now_add=True)
